@@ -17,34 +17,28 @@ package com.example.android.architecture.blueprints.todoapp.tasks
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.distinctUntilChanged
-import androidx.lifecycle.switchMap
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.android.architecture.blueprints.todoapp.Event
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.data.Result
 import com.example.android.architecture.blueprints.todoapp.data.Result.Success
 import com.example.android.architecture.blueprints.todoapp.data.Task
+import com.example.android.architecture.blueprints.todoapp.data.source.ShortcutsRepository
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
-import com.example.android.architecture.blueprints.todoapp.tasks.TasksFilterType.ACTIVE_TASKS
-import com.example.android.architecture.blueprints.todoapp.tasks.TasksFilterType.ALL_TASKS
-import com.example.android.architecture.blueprints.todoapp.tasks.TasksFilterType.COMPLETED_TASKS
+import com.example.android.architecture.blueprints.todoapp.tasks.TasksFilterType.*
 import kotlinx.coroutines.launch
+
 
 /**
  * ViewModel for the task list screen.
  */
 class TasksViewModel(
     private val tasksRepository: TasksRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val shortcutsRepository: ShortcutsRepository,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
-
+    
     private val _forceUpdate = MutableLiveData<Boolean>(false)
 
     private val _items: LiveData<List<Task>> = _forceUpdate.switchMap { forceUpdate ->
@@ -157,6 +151,12 @@ class TasksViewModel(
 
     fun clearCompletedTasks() {
         viewModelScope.launch {
+            // Make sure to fetch IDs that needs to be removed.
+            val tasks = tasksRepository.getTasks(false)
+            if (tasks is Success) {
+                val completedTasks = tasks.data.filter { it.isCompleted }
+                shortcutsRepository.removeShortcuts(completedTasks)
+            }
             tasksRepository.clearCompletedTasks()
             showSnackbarMessage(R.string.completed_tasks_cleared)
         }

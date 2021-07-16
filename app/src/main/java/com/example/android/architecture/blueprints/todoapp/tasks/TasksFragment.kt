@@ -81,7 +81,6 @@ class TasksFragment : Fragment() {
         viewModel.setFiltering(TasksFilterType.find(activity?.intent?.extras?.getString(OPEN_APP_FEATURE)))
 
         viewModel.setFiltering(activity?.intent?.extras?.getString(GET_THING))
-
         return viewDataBinding.root
     }
 

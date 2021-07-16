@@ -16,22 +16,22 @@
 
 package com.example.android.architecture.blueprints.todoapp.addedittask
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.android.architecture.blueprints.todoapp.Event
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.data.Result.Success
 import com.example.android.architecture.blueprints.todoapp.data.Task
+import com.example.android.architecture.blueprints.todoapp.data.source.ShortcutsRepository
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
 import kotlinx.coroutines.launch
+
 
 /**
  * ViewModel for the Add/Edit screen.
  */
 class AddEditTaskViewModel(
-    private val tasksRepository: TasksRepository
+    private val tasksRepository: TasksRepository,
+    private val shortcutsRepository: ShortcutsRepository
 ) : ViewModel() {
 
     // Two-way databinding, exposing MutableLiveData
@@ -114,11 +114,15 @@ class AddEditTaskViewModel(
         }
 
         val currentTaskId = taskId
+        // Note: the shortcuts are created/updated in a worker thread.
         if (isNewTask || currentTaskId == null) {
-            createTask(Task(currentTitle, currentDescription))
+            val task = Task(currentTitle, currentDescription)
+            createTask(task)
+            pushShortcut(task)
         } else {
             val task = Task(currentTitle, currentDescription, taskCompleted, currentTaskId)
             updateTask(task)
+            updateShortcut(task)
         }
     }
 
@@ -135,5 +139,13 @@ class AddEditTaskViewModel(
             tasksRepository.saveTask(task)
             _taskUpdatedEvent.value = Event(Unit)
         }
+    }
+
+    private fun pushShortcut(newTask: Task) = viewModelScope.launch {
+        shortcutsRepository.pushShortcut(newTask)
+    }
+
+    private fun updateShortcut(newTask: Task) = viewModelScope.launch {
+        shortcutsRepository.updateShortcuts(listOf(newTask))
     }
 }

@@ -21,6 +21,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.savedstate.SavedStateRegistryOwner
 import com.example.android.architecture.blueprints.todoapp.addedittask.AddEditTaskViewModel
+import com.example.android.architecture.blueprints.todoapp.data.source.ShortcutsRepository
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
 import com.example.android.architecture.blueprints.todoapp.statistics.StatisticsViewModel
 import com.example.android.architecture.blueprints.todoapp.taskdetail.TaskDetailViewModel
@@ -32,6 +33,7 @@ import com.example.android.architecture.blueprints.todoapp.tasks.TasksViewModel
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory constructor(
         private val tasksRepository: TasksRepository,
+        private val shortcutsRepository: ShortcutsRepository,
         owner: SavedStateRegistryOwner,
         defaultArgs: Bundle? = null
 ) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
@@ -45,11 +47,11 @@ class ViewModelFactory constructor(
             isAssignableFrom(StatisticsViewModel::class.java) ->
                 StatisticsViewModel(tasksRepository)
             isAssignableFrom(TaskDetailViewModel::class.java) ->
-                TaskDetailViewModel(tasksRepository)
+                TaskDetailViewModel(tasksRepository, shortcutsRepository)
             isAssignableFrom(AddEditTaskViewModel::class.java) ->
-                AddEditTaskViewModel(tasksRepository)
+                AddEditTaskViewModel(tasksRepository, shortcutsRepository)
             isAssignableFrom(TasksViewModel::class.java) ->
-                TasksViewModel(tasksRepository, handle)
+                TasksViewModel(tasksRepository, shortcutsRepository, handle)
             else ->
                 throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

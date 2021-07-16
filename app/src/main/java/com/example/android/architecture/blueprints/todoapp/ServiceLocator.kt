@@ -16,9 +16,11 @@
 
 package com.example.android.architecture.blueprints.todoapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.room.Room
 import com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository
+import com.example.android.architecture.blueprints.todoapp.data.source.ShortcutsRepository
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
 import com.example.android.architecture.blueprints.todoapp.data.source.local.TasksLocalDataSource
@@ -26,15 +28,20 @@ import com.example.android.architecture.blueprints.todoapp.data.source.local.ToD
 import com.example.android.architecture.blueprints.todoapp.data.source.remote.TasksRemoteDataSource
 
 /**
- * A Service Locator for the [TasksRepository]. This is the prod version, with a
+ * A Service Locator for the [TasksRepository] and [ShortcutsRepository]. This is the prod version, with a
  * the "real" [TasksRemoteDataSource].
  */
 object ServiceLocator {
 
     private val lock = Any()
     private var database: ToDoDatabase? = null
+
     @Volatile
     var tasksRepository: TasksRepository? = null
+
+    @SuppressLint("StaticFieldLeak")
+    @Volatile
+    var shortcutsRepository: ShortcutsRepository? = null
 
     fun provideTasksRepository(context: Context): TasksRepository {
         synchronized(this) {
@@ -47,6 +54,18 @@ object ServiceLocator {
             DefaultTasksRepository(TasksRemoteDataSource, createTaskLocalDataSource(context))
         tasksRepository = newRepo
         return newRepo
+    }
+
+    private fun createShortcutsRepository(context: Context): ShortcutsRepository {
+        val newRepo = ShortcutsRepository(context.applicationContext)
+        shortcutsRepository = newRepo
+        return newRepo
+    }
+
+    fun provideShortcutsRepository(context: Context): ShortcutsRepository {
+        synchronized(this) {
+            return shortcutsRepository ?: shortcutsRepository ?: createShortcutsRepository(context)
+        }
     }
 
     private fun createTaskLocalDataSource(context: Context): TasksDataSource {
@@ -62,7 +81,6 @@ object ServiceLocator {
         database = result
         return result
     }
-
 }
 
 private const val DB_NAME = "Tasks.db"

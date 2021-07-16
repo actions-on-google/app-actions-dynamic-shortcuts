@@ -17,6 +17,7 @@
 package com.example.android.architecture.blueprints.todoapp
 
 import android.app.Application
+import com.example.android.architecture.blueprints.todoapp.data.source.ShortcutsRepository
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
 
 /**
@@ -30,6 +31,10 @@ class TodoApplication : Application() {
     // Depends on the flavor,
     val taskRepository: TasksRepository
         get() = ServiceLocator.provideTasksRepository(this)
+
+    // Depends on the flavor,
+    val shortcutsRepository: ShortcutsRepository
+        get() = ServiceLocator.provideShortcutsRepository(this)
 
     override fun onCreate() {
         super.onCreate()

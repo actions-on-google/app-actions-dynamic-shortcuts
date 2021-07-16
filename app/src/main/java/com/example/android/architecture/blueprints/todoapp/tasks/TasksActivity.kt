@@ -43,7 +43,6 @@ class TasksActivity : AppCompatActivity() {
         setContentView(R.layout.tasks_act)
         setupNavigationDrawer()
         setSupportActionBar(findViewById(R.id.toolbar))
-
         // Logging for troubleshooting purposes
         logIntent(intent)
 
@@ -60,7 +59,7 @@ class TasksActivity : AppCompatActivity() {
     fun logIntent(intent: Intent) {
         val bundle: Bundle = intent.extras ?: return
 
-        Log.d(TAG, "======= logIntent ========= %s")
+        Log.d(TAG, "======= logIntent ========= ")
         Log.d(TAG, "Logging intent data start")
 
         bundle.keySet().forEach { key ->

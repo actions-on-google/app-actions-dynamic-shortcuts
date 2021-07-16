@@ -27,6 +27,7 @@ import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.data.Result
 import com.example.android.architecture.blueprints.todoapp.data.Result.Success
 import com.example.android.architecture.blueprints.todoapp.data.Task
+import com.example.android.architecture.blueprints.todoapp.data.source.ShortcutsRepository
 import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
 import kotlinx.coroutines.launch
 
@@ -34,8 +35,9 @@ import kotlinx.coroutines.launch
  * ViewModel for the Details screen.
  */
 class TaskDetailViewModel(
-    private val tasksRepository: TasksRepository
-) : ViewModel() {
+        private val tasksRepository: TasksRepository,
+        private val shortcutsRepository: ShortcutsRepository
+    ) : ViewModel() {
 
     private val _taskId = MutableLiveData<String>()
 
@@ -67,6 +69,7 @@ class TaskDetailViewModel(
         _taskId.value?.let {
             tasksRepository.deleteTask(it)
             _deleteTaskEvent.value = Event(Unit)
+            shortcutsRepository.removeShortcutsById(listOf(it))
         }
     }
 

@@ -77,6 +77,11 @@ dependencies {
     implementation "androidx.annotation:annotation:$androidXAnnotations"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
     implementation "androidx.legacy:legacy-support-v4:$androidXLegacySupport"
+    // Shortcuts library
+    // Either core or core-ktx is OK, but the version must be 1.6.0 or later.
+    // In this codelab, we're not using core-ktx features.
+    implementation "androidx.core:core:1.6.0"
+    implementation 'androidx.core:core-google-shortcuts:1.0.0'
 
     kapt "androidx.room:room-compiler:$roomVersion"
 

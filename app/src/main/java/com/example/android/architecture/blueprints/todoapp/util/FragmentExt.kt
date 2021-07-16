@@ -24,6 +24,7 @@ import com.example.android.architecture.blueprints.todoapp.TodoApplication
 import com.example.android.architecture.blueprints.todoapp.ViewModelFactory
 
 fun Fragment.getViewModelFactory(): ViewModelFactory {
-    val repository = (requireContext().applicationContext as TodoApplication).taskRepository
-    return ViewModelFactory(repository, this)
+    val taskRepository = (requireContext().applicationContext as TodoApplication).taskRepository
+    val shortcutsRepository = (requireContext().applicationContext as TodoApplication).shortcutsRepository
+    return ViewModelFactory(taskRepository, shortcutsRepository, this)
 }

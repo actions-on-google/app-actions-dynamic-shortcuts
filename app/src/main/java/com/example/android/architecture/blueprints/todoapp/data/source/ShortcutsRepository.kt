@@ -57,7 +57,7 @@ class ShortcutsRepository(val context: Context) {
         // Need to have unique ID in order to not overwrite exiting shortcut.
         return ShortcutInfoCompat.Builder(appContext, task.id)
                 .setShortLabel(task.title)
-                .setLongLabel(task.description)
+                .setLongLabel(task.title)
                 // User is able to invoke shortcut by its title.
                 .addCapabilityBinding(
                         "actions.intent.GET_THING", "thing.name", listOf(task.title))

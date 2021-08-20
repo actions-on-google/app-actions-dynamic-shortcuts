@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Google LLC
+ * Copyright (C) 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@ dependencies {
     // Shortcuts library
     // Either core or core-ktx is OK, but the version must be 1.6.0 or later.
     // In this codelab, we're not using core-ktx features.
-    implementation "androidx.core:core:1.6.0"
+    implementation "androidx.core:core:1.7.0"
     implementation 'androidx.core:core-google-shortcuts:1.0.0'
 
     kapt "androidx.room:room-compiler:$roomVersion"

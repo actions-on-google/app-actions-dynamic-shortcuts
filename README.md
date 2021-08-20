@@ -1,4 +1,4 @@
-# App Actions to-do list sample
+# App Actions to-do list sample (https://codelabs.developers.google.com/codelabs/appactions-dynamic-shortcuts)
 
 This sample Android app manages items on to-do lists. Users can add items to to-do lists, search for items by category, and view information about completed tasks.
 
@@ -6,18 +6,7 @@ Note: This sample application is a fork of the [Android to-do sample](https://gi
 
 By implementing [App Actions](https://developers.google.com/assistant/app/), the app can additionally respond to user queries (voice or text) with the help of Google Assistant.
 
-The app demonstrates usage of the following built-in intents (BIIs) in the common category:
-
-* `actions.intent.OPEN_APP_FEATURE`: Opens a specific feature in the app based on the user query. Here are some example user queries that match this intent:
-
-    * "Open active tasks in test app action"
-    * "Open completed tasks in test app action"
-    * "Open all tasks in test app action"
-
-* `actions.intent.GET_THING`: Search and filter within the app using keywords. Here are some example user queries that match this intent:
-
-    * "Search family in test app action"
-    * "Look up eggs in test app action"
+App Actions uses [Android Shortcuts](https://developer.android.com/guide/topics/ui/shortcuts) in order to launch an app in response to the query. This app demonstrates how to implement dynamic shortcuts in an app to allow the user to launch the app directly into an in-app item requested by the user.
 
 <div style="text-align:center">
   <img alt="App Actions Demo" src="media/to-do-demo.gif">
@@ -73,15 +62,14 @@ Clone or download the project to your preferred location. Then, import and modif
 Then, you can try the App Actions by following these steps:
 
 1. Build and run the sample on your physical test device (**Run "app"**).
-2. Open the App Actions test tool (**Tools > Google Assistant > App Actions Test Tool**).
-3. Define an invocation name to use for invoking the App Actions (like "my test app"). This name is only for testing purposes, so it can be different from what you want to deploy to production later.
-4. Click **Create Preview**. Once your preview is created, the test tool window updates to display information about BIIs found in your `shortcuts.xml` file.
+2. Open the app and create a to-do item.
+3. Open the Shortcuts test tool (**Tools > Google Assistant > Shortcuts Test Tool**).
+4. Select the shortcut corresponding to the to-do item, and press "Test". You should see an app opened
+for that to-do item.
 
 <div style="text-align:center">
-  <img alt="App Action Test Tool" width="40%" height="40%" src="media/app-actions-test-tool.png">
+  <img alt="Shortcuts Test Tool" width="90%" height="80%" src="media/shortcuts-test-tool.png">
 </div>
-
-After you create a preview, you can then try using voice or written commands directly with Assistant on your test device.
 
 If you run into any issues, check out the [troubleshooting guide](https://developers.google.com/assistant/app/troubleshoot) in our developer documentation.
 

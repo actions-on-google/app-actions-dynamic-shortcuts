@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 Google LLC
+ * Copyright (C) 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.android.tools.build:gradle:7.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
 
@@ -57,7 +57,7 @@ ext {
     // Sdk and tools
     // App Actions supported on minSdk 21 and above.
     minSdkVersion = 21
-    targetSdkVersion = 29
+    targetSdkVersion = 30
     compileSdkVersion = 28
 
     // App dependencies

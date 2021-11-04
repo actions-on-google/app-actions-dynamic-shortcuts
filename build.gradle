@@ -58,7 +58,7 @@ ext {
     // App Actions supported on minSdk 21 and above.
     minSdkVersion = 25
     targetSdkVersion = 30
-    compileSdkVersion = 28
+    compileSdkVersion = 31
 
     // App dependencies
     androidXVersion = '1.0.0'

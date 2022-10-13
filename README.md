@@ -1,4 +1,6 @@
-# App Actions to-do list sample (https://codelabs.developers.google.com/codelabs/appactions-dynamic-shortcuts)
+# *:warning: Warning: Go to [App Actions Dyanamic Shortcut sample](https://github.com/android/app-actions/dynamic-shortcuts) for maintained sample.
+
+*:warning: Warning: This [App Actions Dyanamic Shortcut sample](https://github.com/android/app-actions/dynamic-shortcuts) has migrated to [App-Action directory](https://github.com/android/app-actions) in Andriod Github. This version will no longer be maintained.*
 
 This sample Android app manages items on to-do lists. Users can add items to to-do lists, search for items by category, and view information about completed tasks.
 
